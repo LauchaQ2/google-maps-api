@@ -3,10 +3,9 @@ import {
   Button,
   ButtonGroup,
   Flex,
-  HStack,
-  IconButton,
-  Input,
+  Heading,
   SkeletonText,
+  styled,
   Text,
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
@@ -19,16 +18,28 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api'
 import { useRef, useState } from 'react'
+import iconPlumber from './assets/water-tap.png'
+import './App.css'
+const center = { lat: -34.620822587814146, lng: -58.40927178465856 }
+const place1 = { lat: -34.60722553464732, lng: -58.37032071534143 }
+const place2 = { lat: -34.61441369056862, lng: -58.40120256217304 }
+const place3 = { lat: -34.61745107317514, lng: -58.414162995240034 }
+const place4 = { lat: -34.630553093920675, lng: -58.418642824671906 }
 
-const center = { lat: 48.8584, lng: 2.2945 }
+const libraries = ['places']
+
+
+const image = iconPlumber;
+
 
 function App() {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ['places'],
+    googleMapsApiKey: 'AIzaSyA_bDJSRoGxiBJ3IFTFEGgM98gDR9lOtIQ',
+    libraries
   })
 
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+
+  const [map, setMap] = useState(/** @type google.maps.Map */(null))
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
@@ -57,6 +68,7 @@ function App() {
     setDirectionsResponse(results)
     setDistance(results.routes[0].legs[0].distance.text)
     setDuration(results.routes[0].legs[0].duration.text)
+
   }
 
   function clearRoute() {
@@ -66,6 +78,7 @@ function App() {
     originRef.current.value = ''
     destiantionRef.current.value = ''
   }
+
 
   return (
     <Flex
@@ -90,6 +103,11 @@ function App() {
           onLoad={map => setMap(map)}
         >
           <Marker position={center} />
+          <Marker position={place1} title='Plomero' icon={image} />
+          <Marker position={place2} title='Plomero' icon={image} />
+          <Marker position={place3} title='Plomero' icon={image} />
+          <Marker position={place4} title='Plomero' icon={image} />
+
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
@@ -101,49 +119,9 @@ function App() {
         m={4}
         bgColor='white'
         shadow='base'
-        minW='container.md'
         zIndex='1'
       >
-        <HStack spacing={2} justifyContent='space-between'>
-          <Box flexGrow={1}>
-            <Autocomplete>
-              <Input type='text' placeholder='Origin' ref={originRef} />
-            </Autocomplete>
-          </Box>
-          <Box flexGrow={1}>
-            <Autocomplete>
-              <Input
-                type='text'
-                placeholder='Destination'
-                ref={destiantionRef}
-              />
-            </Autocomplete>
-          </Box>
-
-          <ButtonGroup>
-            <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
-              Calculate Route
-            </Button>
-            <IconButton
-              aria-label='center back'
-              icon={<FaTimes />}
-              onClick={clearRoute}
-            />
-          </ButtonGroup>
-        </HStack>
-        <HStack spacing={4} mt={4} justifyContent='space-between'>
-          <Text>Distance: {distance} </Text>
-          <Text>Duration: {duration} </Text>
-          <IconButton
-            aria-label='center back'
-            icon={<FaLocationArrow />}
-            isRound
-            onClick={() => {
-              map.panTo(center)
-              map.setZoom(15)
-            }}
-          />
-        </HStack>
+        <Heading>Plomeros de CABA</Heading>
       </Box>
     </Flex>
   )
