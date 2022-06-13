@@ -37,35 +37,35 @@ function App() {
   })
 
   const data = [
-    {
+    { id: 1,
       lat: -34.61442369056862,
       lng: -58.40927178465856,
       name: "Plomero 1",
       phone: "123456"
     }
     ,
-    {
+    {id: 2,
       lat: -34.61441369056862,
       lng: -58.40120256217304,
       name: "Plomero 2",
       phone: "983457876"
     }
     ,
-    {
+    {id: 3,
       lat: -34.61745107317514,
       lng: -58.414162995240034,
       name: "Plomero 3",
       phone: "16547564"
     }
     ,
-    {
+    {id: 4,
       lat: -34.630553093920675,
       lng: -58.418642824671906,
       name: "Plomero 4",
       phone: "34234234"
     }
     ,
-    {
+    {id: 5,
       lat: -34.622288202192664,
       lng: -58.401654311026846,
       name: "Plomero 5",
@@ -76,7 +76,7 @@ function App() {
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
-  const [placeSelected, setPlaceSelected] = useState("");
+  const [placeSelected, setPlaceSelected] = useState(null);
 
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef()
@@ -144,7 +144,7 @@ function App() {
           {
             data.map(place => {
               return (
-                <><Marker onClick={() => { setPlaceSelected(place) }} title={place.name} icon={image} position={place} />
+                <><Marker key={place.id} onClick={() => { setPlaceSelected(place) }} title={place.name} icon={image} position={place} />
                   
                   </>
                   
