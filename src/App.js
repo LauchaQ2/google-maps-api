@@ -8,7 +8,8 @@ import {
   styled,
   Text,
 } from '@chakra-ui/react'
-import { FaLocationArrow, FaTimes } from 'react-icons/fa'
+import { FaLocationArrow, FaTimes } from 'react-icons/fa';
+import logo from '../src/assets/logos/logo_large.png'
 
 import {
   useJsApiLoader,
@@ -105,6 +106,8 @@ function App() {
 
   }
 
+  console.log()
+
   function clearRoute() {
     setDirectionsResponse(null)
     setDistance('')
@@ -167,13 +170,13 @@ function App() {
       </Box>
       <Box
         p={4}
-        borderRadius='lg'
-        m={4}
-        bgColor='white'
+        m={0}
+        bgColor='black'
         shadow='base'
         zIndex='1'
+        w="100%"
       >
-        <Heading>Plomeros de CABA</Heading>
+        <Heading><img className='logo' src={logo}/></Heading>
       </Box>
     </Flex>
   )
